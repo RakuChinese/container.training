@@ -155,8 +155,9 @@ implementation for simplicity.*
 
 - Get the port number programmatically:
   ```bash
-  NODEPORT=$(kubectl get svc/registry -o json | jq .spec.ports[0].nodePort)
-  REGISTRY=127.0.0.1:$NODEPORT
+  IP=$(minikube ip)
+  NODEPORT=$(kubectl get svc/registry -o json | jq .spec.ports | jq -r '.[].nodePort')
+  REGISTRY=$IP:$NODEPORT
   ```
 
 ]
